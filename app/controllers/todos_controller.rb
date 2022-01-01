@@ -1,4 +1,6 @@
 class TodosController < ApplicationController
+  before_action :set_default_isDone, only: :create 
+
   def index
     todos = Todo.order("created_at desc")
     render json: todos
@@ -25,5 +27,9 @@ class TodosController < ApplicationController
 
   def todo_params 
     params.require(:todo).permit(:title, :isDone)
+  end
+
+  def set_default_isDone
+    params[:todo][:isDone] = false
   end
 end
